@@ -12,14 +12,22 @@ export async function registerStudent(req,res){
         //     TC: true
         // }
 
+        if (!studentDetials) return res.status(400).json({ message: "Invalid request body", flag: false });
+
         const result=await StudentRegister.findOne({studentEmailId:studentDetials?.studentEmailId});
         if(result) return res.status(400).json({message:"User with this email is already registered",flag:false})
 
-        const hashedPasswd=await bcrypt.hash(studentDetials?.studentPassword,30);
-        
+        const hashedPasswd=await bcrypt.hash(studentDetials?.studentPassword,10);
+
+        await StudentRegister.create({
+            studentFullName:studentDetials?.studentFullName,
+            studentEmailId:studentDetials?.studentEmailId.toLowerCase(),
+            studentPassword:hashedPasswd,
+            TC:studentDetials?.TC
+        })
 
         
-        return res.status(200).json({message:"Student registered successfully",flag:true})
+        return res.status(201).json({message:"Student registered successfully",flag:true})
 
 
     }catch(error){

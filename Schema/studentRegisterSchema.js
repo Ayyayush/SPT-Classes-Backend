@@ -12,9 +12,9 @@ const studentRegisterSchema = new mongoose.Schema(
       required: true,
       unique: true,
       lowercase: true,
-      match: /^[a-zA-Z0-9]+@gmail\.(com|in|net|org)$/
+      match: /^[a-zA-Z0-9._%+-]+@gmail\.(com|in|net|org)$/
     },
-    password:{
+    studentPassword:{
         type:String,
         required:true,
         minlength: 6,
