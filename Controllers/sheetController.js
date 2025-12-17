@@ -1,7 +1,8 @@
 import { google } from "googleapis";
 export async function addDataInSheet(req,res){
     try{
-        const value=req?.body
+        const values=req?.body?.values
+        console.log(values)
         const auth = new google.auth.GoogleAuth({
             keyFile: "./credentials.json", // path to service account key
             scopes: ["https://www.googleapis.com/auth/spreadsheets"],
