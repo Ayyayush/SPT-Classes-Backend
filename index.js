@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import cors from "cors";
 import DBConnection  from "./Database/database.js";
 import adminRouter from "./Routers/adminRoutes.js";
+import userRouter from "./Routers/userRoutes.js";
 
 dotenv.config();
 const app=express();
@@ -26,6 +27,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // routes
 app.use("/admin", adminRouter);
+app.use("/user",userRouter)
 
 
 app.listen(process.env.PORT,()=>{
