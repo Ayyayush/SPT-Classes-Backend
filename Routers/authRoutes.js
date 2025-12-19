@@ -6,6 +6,6 @@ console.log("🔥 authRoutes loaded");
 const authRouter = express.Router();
 
 authRouter.post("/registerStudent", registerStudent);
-authRouter.post("/login", loginUser);
+authRouter.post("/studentLogin", loginUser);
 
 export default authRouter;

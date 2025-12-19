@@ -58,7 +58,7 @@ export async function loginUser(req, res) {
         }
 
         // User database me find kar rahe hain
-        const user = await User.findOne({ email });
+        const user = await StudentRegister.findOne({ email });
 
         if (!user) {
             return res.status(401).json({
@@ -70,7 +70,7 @@ export async function loginUser(req, res) {
         // Password compare kar rahe hain
         const isPasswordMatch = await bcrypt.compare(
             password,
-            user.password
+            user.studentPassword
         );
 
         if (!isPasswordMatch) {
