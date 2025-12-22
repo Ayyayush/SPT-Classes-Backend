@@ -1,18 +1,18 @@
-import dotenv from "dotenv";
-dotenv.config();                                // 1️⃣ Load env first
+import "./config/env.js";
 
 import express from "express";
 import cors from "cors";
 
 import DBConnection from "./Database/database.js";
-
 import adminRouter from "./Routers/adminRoutes.js";
 import userRouter from "./Routers/userRoutes.js";
 import authRouter from "./Routers/authRoutes.js";
+import contactRoutes from "./Routers/contactRoutes.js";
+
 
 const app = express();
 
-// 2️⃣ CORS (frontend alag port pe hai)
+// 2️⃣ CORS (frontend on different port)
 app.use(
   cors({
     origin: "http://localhost:3000",
@@ -27,18 +27,19 @@ app.use(express.urlencoded({ extended: true }));
 // 4️⃣ Database connection
 DBConnection();
 
-
-// 🔥 DEBUG
+// 🔥 Debug middleware (very useful)
 app.use((req, res, next) => {
   console.log("➡️", req.method, req.url);
   next();
 });
 
+// 5️⃣ Routes
 app.use("/admin", adminRouter);
 app.use("/user", userRouter);
 app.use("/api/auth", authRouter);
+app.use("/api", contactRoutes);   // ✅ POST /api/contact
 
-// 6️⃣ Health check (optional but useful)
+// 6️⃣ Health check
 app.get("/", (req, res) => {
   res.send("SPT Classes Backend is running 🚀");
 });
