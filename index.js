@@ -9,42 +9,45 @@ import userRouter from "./Routers/userRoutes.js";
 import authRouter from "./Routers/authRoutes.js";
 import contactRoutes from "./Routers/contactRoutes.js";
 
-
 const app = express();
 
-// 2️⃣ CORS (frontend on different port)
+/* ================= CORS (FIXED) ================= */
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: [
+      "http://localhost:3000",
+      "https://spt-classes.onrender.com",
+    ],
     credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE"],
   })
 );
 
-// 3️⃣ Body parsers
+/* ================= BODY PARSERS ================= */
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// 4️⃣ Database connection
+/* ================= DATABASE ================= */
 DBConnection();
 
-// 🔥 Debug middleware (very useful)
+/* ================= DEBUG MIDDLEWARE ================= */
 app.use((req, res, next) => {
   console.log("➡️", req.method, req.url);
   next();
 });
 
-// 5️⃣ Routes
+/* ================= ROUTES ================= */
 app.use("/admin", adminRouter);
 app.use("/user", userRouter);
 app.use("/api/auth", authRouter);
-app.use("/api", contactRoutes);   // ✅ POST /api/contact
+app.use("/api", contactRoutes);   // POST /api/contact
 
-// 6️⃣ Health check
+/* ================= HEALTH CHECK ================= */
 app.get("/", (req, res) => {
   res.send("SPT Classes Backend is running 🚀");
 });
 
-// 7️⃣ Start server
+/* ================= SERVER ================= */
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log("Server listening at the port " + PORT);
