@@ -5,7 +5,17 @@ export const sendContactMail = async (req, res) => {
     const { name, email, phone, subject, message } = req.body;
 
     if (!name || !email || !phone || !subject || !message) {
-      return res.status(400).json({ message: "All fields are required" });
+      return res.status(400).json({
+        success: false,
+        message: "All fields are required",
+      });
+    }
+
+    if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
+      return res.status(500).json({
+        success: false,
+        message: "Mail service not configured",
+      });
     }
 
     await transporter.sendMail({
@@ -22,9 +32,17 @@ export const sendContactMail = async (req, res) => {
       `,
     });
 
-    return res.status(200).json({ message: "Email sent" });
+    return res.status(200).json({
+      success: true,
+      message: "Email sent successfully",
+    });
+
   } catch (error) {
-    console.error("Email Error:", error);
-    return res.status(500).json({ message: "Email failed" });
+    console.error("❌ Email Error:", error);
+
+    return res.status(500).json({
+      success: false,
+      message: "Failed to send email",
+    });
   }
 };

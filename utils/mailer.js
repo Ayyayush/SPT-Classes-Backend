@@ -1,13 +1,16 @@
 import nodemailer from "nodemailer";
 
-console.log("MAIL USER:", process.env.EMAIL_USER);
-console.log("MAIL PASS EXISTS:", !!process.env.EMAIL_PASS);
+if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
+  console.error("❌ EMAIL ENV VARIABLES MISSING");
+}
 
 const transporter = nodemailer.createTransport({
-  service: "gmail",
+  host: "smtp.gmail.com",
+  port: 587,
+  secure: false, // TLS
   auth: {
     user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
+    pass: process.env.EMAIL_PASS, // MUST be App Password
   },
 });
 
