@@ -10,6 +10,7 @@ import bcrypt from "bcrypt";
 // ======================= REGISTER (SIGNUP) =======================
 export async function registerStudent(req,res){
     try{
+        console.log("Holaaaa")
         const studentDetials=req?.body?.studentDetials;
         // console.log(studentDetials)
         // studentDetials: {
@@ -58,7 +59,7 @@ export async function loginUser(req, res) {
         }
 
         // User database me find kar rahe hain
-        const user = await StudentRegister.findOne({ email });
+        const user = await StudentRegister.findOne({ studentEmailId:email });
 
         if (!user) {
             return res.status(401).json({

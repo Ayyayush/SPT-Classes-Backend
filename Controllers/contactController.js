@@ -2,6 +2,7 @@ import transporter from "../utils/mailer.js";
 
 export const sendContactMail = async (req, res) => {
   try {
+    console.log("hello fuckkkkkking")
     const { name, email, phone, subject, message } = req.body;
 
     if (!name || !email || !phone || !subject || !message) {
