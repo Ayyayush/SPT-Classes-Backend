@@ -76,7 +76,7 @@ export async function loginUser(req, res) {
 
         if (!isPasswordMatch) {
             return res.status(401).json({
-                message: "Invalid email or password",
+                message: "Invalid password",
                 success: false,
             });
         }
