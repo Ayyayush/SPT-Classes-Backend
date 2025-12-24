@@ -19,7 +19,8 @@ export const sendContactMail = async (req, res) => {
       });
     }
 
-    await transporter.sendMail({
+
+    let info = await transporter.sendMail({
       from: `"SPT Classes" <${process.env.EMAIL_USER}>`,
       to: process.env.EMAIL_USER,
       subject: `New Contact Form: ${subject}`,
@@ -32,6 +33,8 @@ export const sendContactMail = async (req, res) => {
         <p><strong>Message:</strong><br/>${message}</p>
       `,
     });
+
+    console.log(info)
 
     return res.status(200).json({
       success: true,
