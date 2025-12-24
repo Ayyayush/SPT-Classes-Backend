@@ -49,7 +49,6 @@ export async function loginUser(req, res) {
     try {
         // Request body se email & password nikal rahe hain
         const { email, password } = req.body;
-
         // Validation
         if (!email || !password) {
             return res.status(400).json({
@@ -59,7 +58,7 @@ export async function loginUser(req, res) {
         }
 
         // User database me find kar rahe hain
-        const user = await StudentRegister.findOne({ studentEmailId:email });
+        const user = await StudentRegister.findOne({studentEmailId:email});
 
         if (!user) {
             return res.status(401).json({
@@ -67,7 +66,6 @@ export async function loginUser(req, res) {
                 success: false,
             });
         }
-
         // Password compare kar rahe hain
         const isPasswordMatch = await bcrypt.compare(
             password,
@@ -96,7 +94,7 @@ export async function loginUser(req, res) {
         });
 
     } catch (error) {
-        console.log("Error in loginUser:", error.message);
+        console.log("Error in loginUser:", error);
 
         return res.status(500).json({
             message: "Server error during login",

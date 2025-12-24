@@ -18,7 +18,6 @@ const studentRegisterSchema = new mongoose.Schema(
         type:String,
         required:true,
         minlength: 6,
-        select: false
     },
     TC: {
       type: Boolean,
