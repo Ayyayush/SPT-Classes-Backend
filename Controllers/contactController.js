@@ -11,7 +11,13 @@ export const sendContactMail = async (req, res) => {
       });
     }
 
-    if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
+    // 🔒 Ensure Brevo SMTP is configured
+    if (
+      !process.env.SMTP_HOST ||
+      !process.env.SMTP_PORT ||
+      !process.env.SMTP_USER ||
+      !process.env.SMTP_PASS
+    ) {
       return res.status(500).json({
         success: false,
         message: "Mail service not configured",
@@ -19,8 +25,9 @@ export const sendContactMail = async (req, res) => {
     }
 
     await transporter.sendMail({
-      from: `"SPT Classes" <${process.env.EMAIL_USER}>`,
-      to: process.env.EMAIL_USER,
+      from: "SPT Classes <noreply@brevo.com>",   // Brevo-safe sender
+      to: "yourgmail@gmail.com",                 // where YOU want to receive mails
+      replyTo: email,                            // user's email
       subject: `New Contact Form: ${subject}`,
       html: `
         <h2>New Contact Form Submission</h2>

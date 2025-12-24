@@ -1,16 +1,21 @@
 import nodemailer from "nodemailer";
 
-if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
-  console.error("❌ EMAIL ENV VARIABLES MISSING");
+if (
+  !process.env.SMTP_HOST ||
+  !process.env.SMTP_PORT ||
+  !process.env.SMTP_USER ||
+  !process.env.SMTP_PASS
+) {
+  console.error("❌ SMTP ENV VARIABLES MISSING");
 }
 
 const transporter = nodemailer.createTransport({
-  host: "smtp.gmail.com",
-  port: 587,
-  secure: false, // TLS
+  host: process.env.SMTP_HOST,               // smtp-relay.brevo.com
+  port: Number(process.env.SMTP_PORT),       // 587
+  secure: false,
   auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS, // MUST be App Password
+    user: process.env.SMTP_USER,             // apikey
+    pass: process.env.SMTP_PASS,             // xkeysib-xxxx
   },
 });
 
