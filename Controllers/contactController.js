@@ -19,7 +19,7 @@ export const sendContactMail = async (req, res) => {
       });
     }
 
-
+    console.log("before info")
     let info = await transporter.sendMail({
       from: `"SPT Classes" <${process.env.EMAIL_USER}>`,
       to: process.env.EMAIL_USER,
