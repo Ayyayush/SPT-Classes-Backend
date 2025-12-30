@@ -5,10 +5,11 @@ if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
 }
 
 const transporter = nodemailer.createTransport({
-  host: process.env.HOST,
+  host: "smtp.sendgrid.net",
+  port: 587,
   auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS, // MUST be App Password
+    user: "apikey",
+    pass: process.env.SENDGRID_API_KEY, // MUST be App Password
   },
 });
 
